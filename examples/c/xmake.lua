@@ -54,9 +54,36 @@ target("minimal")
         add_deps("libbpf")
     end
 
+target("hello")
+    set_kind("binary")
+    add_files("hello*.c")
+    add_packages("linux-headers")
+    if not has_config("system-libbpf") then
+        add_deps("libbpf")
+    end
+
+target("venco")
+    set_kind("binary")
+    add_files("venco*.c")
+    add_packages("linux-headers")
+    if not has_config("system-libbpf") then
+        add_deps("libbpf")
+    end
+
 target("bootstrap")
     set_kind("binary")
     add_files("bootstrap*.c")
+    add_packages("linux-headers")
+    if not has_config("system-libbpf") then
+        add_deps("libbpf")
+    end
+    if is_plat("android") then
+        add_packages("argp-standalone")
+    end
+
+target("kill9")
+    set_kind("binary")
+    add_files("kill9*.c")
     add_packages("linux-headers")
     if not has_config("system-libbpf") then
         add_deps("libbpf")
