@@ -4,3 +4,6 @@
 /uprobe
 /kprobe
 /fentry
+/hkill
+/hello
+/hello2
