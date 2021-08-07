@@ -4,23 +4,18 @@
 #include <vmlinux.h>
 #include <bpf/bpf_helpers.h>
 #include <bpf/bpf_core_read.h>
-#include <bpf/bpf_tracing.h>
 
 char LICENSE[] SEC("license") = "Dual BSD/GPL";
 
-SEC("tp/syscalls/sys_enter_mkdir")
+SEC("tp/syscalls/sys_enter_kill")
 int handle_tp(struct trace_event_raw_sys_enter *ctx)
 {
 	int pid = bpf_get_current_pid_tgid() >> 32;
-	u32 uid = bpf_get_current_uid_gid();
-	//char comm[16] = {};
-	//bpf_get_current_comm(&comm, sizeof(comm));
-        char dir[80] = {}; 
-	bpf_probe_read_user_str(&dir, sizeof(dir), (void *)ctx->args[0]) ;
-        
-	// signal = BPF_CORE_READ(ctx, id);
-	
-	bpf_printk("BPF triggered from PID %d, UID: %d has created a directory %s.\n", pid, uid, &dir);
+	char comm[16];
+	bpf_get_current_comm(&comm, sizeof(comm));
+	int tpid = ctx->args[0];
+	int sig = ctx->args[1];
+	bpf_printk("Hello reader, we have TPID: %d killed with Signal: %d by PID:%d\n", tpid, sig, pid);
 
 	return 0;
 }

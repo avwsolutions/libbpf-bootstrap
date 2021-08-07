@@ -62,9 +62,9 @@ target("hello")
         add_deps("libbpf")
     end
 
-target("venco")
+target("hello2")
     set_kind("binary")
-    add_files("venco*.c")
+    add_files("hello2*.c")
     add_packages("linux-headers")
     if not has_config("system-libbpf") then
         add_deps("libbpf")
@@ -81,9 +81,9 @@ target("bootstrap")
         add_packages("argp-standalone")
     end
 
-target("kill9")
+target("hkill")
     set_kind("binary")
-    add_files("kill9*.c")
+    add_files("hkill*.c")
     add_packages("linux-headers")
     if not has_config("system-libbpf") then
         add_deps("libbpf")
